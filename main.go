@@ -5,6 +5,7 @@ import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
 	"io/ioutil"
+	"html"
 	"os"
 )
 
@@ -31,7 +32,7 @@ func main() {
 
 	for  update:= range updates {
 		if update.InlineQuery != nil {
-			storage[update.InlineQuery.From.ID] = update.InlineQuery.Query
+			storage[update.InlineQuery.From.ID] = html.UnescapeString(update.InlineQuery.Query)
 			article := tgbotapi.NewInlineQueryResultArticle(update.InlineQuery.ID, "Click here to set a password", "Password is successfully set")
 
 			inlineConf := tgbotapi.InlineConfig{
